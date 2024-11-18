@@ -21,12 +21,15 @@
 #include "QGVLayerTiles.h"
 
 #include <QNetworkReply>
+#include <QtSql/QSqlDatabase>
 
 class QGV_LIB_DECL QGVLayerTilesOnline : public QGVLayerTiles
 {
     Q_OBJECT
 
 public:
+    QGVLayerTilesOnline();
+
     ~QGVLayerTilesOnline();
 
 protected:
@@ -38,6 +41,10 @@ private:
     void onReplyFinished(QNetworkReply* reply, const QGV::GeoTilePos& tilePos);
     void removeReply(const QGV::GeoTilePos& tilePos);
 
+    QByteArray findCachedTile(const QGV::GeoTilePos& tilePos, const QString& url);
+    void cacheTile(const QByteArray& image, const QGV::GeoTilePos& tilePos, const QString& url);
 private:
+    QSqlDatabase mSqlDatabase = QSqlDatabase::addDatabase("QSQLITE");
+
     QMap<QGV::GeoTilePos, QNetworkReply*> mRequest;
 };

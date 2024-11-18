@@ -1,7 +1,7 @@
 TARGET = qgeoview
 TEMPLATE = lib
 
-QT += gui widgets network
+QT += gui widgets network sql
 
 DEFINES += QGV_EXPORT
 
